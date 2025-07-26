@@ -137,13 +137,16 @@ function updateGraph() {
 		})
 		.attr('id', function(node) {return 'node_' + node.id})
 		.attr('fill', function(node) {
+			// Always make searched/clicked addresses red
+			if (node.group === 0) return 'rgba(0, 255, 0, 0.85)';
+			
 			switch(fillStyle) {
 				default:
 				case 0: return 'hsla(' + node.distance*15 + ', 90%, 50%, 0.85';
 				case 1: return 'rgba(127, 127, 255, 0.85)';
-				case 2: return node.id == taintOrigin ? 'rgba(127, 127, 255, 0.85)' : (taintedAddresses.has(node.id) && taintedAddresses.get(node.id)["poison"] ? 'rgba(255, 0, 0, 0.85)' : 'rgba(127, 196, 127, 0.85)');
-				case 3: return node.id == taintOrigin ? 'rgba(127, 127, 255, 0.85)' : (taintedAddresses.has(node.id) && taintedAddresses.get(node.id)["haircut"] > 0 ? 'rgba(' + Math.floor(taintedAddresses.get(node.id)["haircut"] * 255) + ', 0, 0, 0.85)' : 'rgba(127, 196, 127, 0.85)');
-				case 4: return node.id == taintOrigin ? 'rgba(127, 127, 255, 0.85)' : (taintedAddresses.has(node.id) && taintedAddresses.get(node.id)["fifo"] > 0 ? 'rgba(' + Math.floor(taintedAddresses.get(node.id)["fifo"]/taintValue * 255) + ', 0, 0, 0.85)' : 'rgba(127, 196, 127, 0.85)');
+				case 2: return node.id == taintOrigin ? 'rgba(255, 0, 0, 0.85)' : (taintedAddresses.has(node.id) && taintedAddresses.get(node.id)["poison"] ? 'rgba(255, 0, 0, 0.85)' : 'rgba(127, 196, 127, 0.85)');
+				case 3: return node.id == taintOrigin ? 'rgba(255, 0, 0, 0.85)' : (taintedAddresses.has(node.id) && taintedAddresses.get(node.id)["haircut"] > 0 ? 'rgba(' + Math.floor(taintedAddresses.get(node.id)["haircut"] * 255) + ', 0, 0, 0.85)' : 'rgba(127, 196, 127, 0.85)');
+				case 4: return node.id == taintOrigin ? 'rgba(255, 0, 0, 0.85)' : (taintedAddresses.has(node.id) && taintedAddresses.get(node.id)["fifo"] > 0 ? 'rgba(' + Math.floor(taintedAddresses.get(node.id)["fifo"]/taintValue * 255) + ', 0, 0, 0.85)' : 'rgba(127, 196, 127, 0.85)');
 			}
 		})
 		.style('cursor', 'pointer')
